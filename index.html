@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lockdown Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+    <style>
+        .centered-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .logo {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<section class="section">
+    <div class="container centered-content">
+        <figure class="image is-128x128 logo">
+            <img src="img/logo.svg" alt="Logo">
+        </figure>
+        <h1 class="title">FHS Lockdown Control</h1>
+        <div class="buttons">
+            <button class="button is-danger" id="startLockdown">Begin Lockdown</button>
+            <button class="button is-success" id="endLockdown">End Lockdown</button>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<script src="./config/app.js"></script>
+<script>
+
+    $(document).ready(function() {
+        $('#startLockdown').click(function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to start the lockdown? This will interrupt any active sessions.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    startLockdown();
+                }
+            });
+        });
+
+        $('#endLockdown').click(function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to end the lockdown?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    endLockdown();
+                }
+            });
+        });
+
+        function startLockdown() {
+
+            $.ajax({
+                url: apiBeginUrl + "?key=" + apiKey + "&type=" + lockdownKey + "&location=" + locationKey,
+                // EG: http://api.vivi.io/api/public/v1/emergencies/trigger?key=aaaaeeee&type=978ee9c3-b651-4adb-a819-844cc9871b77"
+                method: 'GET',
+                success: function(response) {
+                    Swal.fire('A request to start the lockdown was initiated.', '', 'success');
+                },
+                error: function(jqXHR) {
+                    Swal.fire('There was an error when attempting to start the lockdown.', '', 'error');
+                }
+            });
+
+        }
+
+        function endLockdown() {
+
+            $.ajax({
+                url: apiCancelUrl + "?key=" + apiKey + "&type=" + lockdownKey + "&location=" + locationKey,
+                // EG: http://api.vivi.io/api/public/v1/emergencies/cancel?key=aaaaeeee&type=978ee9c3-b651-4adb-a819-844cc9871b77"
+                method: 'GET',
+                success: function(response) {
+                    Swal.fire('A request to cancel the lockdown was initiated.', '', 'success');
+                },
+                error: function(jqXHR) {
+                    Swal.fire('There was an error when attempting to cancel the lockdown.', '', 'error');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+/* Define the API Keys and URLs */
+const apiKey = ""
+const locationKey = ""
+const apiBeginUrl = "https://api.vivi.io/api/public/v1/emergencies/trigger"
+const apiCancelUrl = "https://api.vivi.io/api/public/v1/emergencies/cancel"
+const lockdownKey = ""
