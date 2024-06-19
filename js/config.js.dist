@@ -1,4 +1,4 @@
-/* Define the API Keys and URLs */
+/* Replace these with your API, Location and Lockdown Keys from the Vivi Console */
 const apiKey = ""
 const locationKey = ""
 const apiBeginUrl = "https://api.vivi.io/api/public/v1/emergencies/trigger"
