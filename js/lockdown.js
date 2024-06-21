@@ -32,7 +32,7 @@ $(document).ready(function() {
     function startLockdown() {
 
         $.ajax({
-            url: apiBeginUrl + "?key=" + apiKey + "&type=" + lockdownKey + "&location=" + locationKey,
+            url: apiBeginUrl + "?key=" + apiKey + "&type=" + lockdownKey,
             method: 'GET',
             success: function(response) {
                 Swal.fire('A request to start the lockdown was initiated.', '', 'success');
@@ -47,7 +47,7 @@ $(document).ready(function() {
     function endLockdown() {
 
         $.ajax({
-            url: apiCancelUrl + "?key=" + apiKey + "&type=" + lockdownKey + "&location=" + locationKey,
+            url: apiCancelUrl + "?key=" + apiKey + "&type=" + lockdownKey,
             method: 'GET',
             success: function(response) {
                 Swal.fire('A request to cancel the lockdown was initiated.', '', 'success');
